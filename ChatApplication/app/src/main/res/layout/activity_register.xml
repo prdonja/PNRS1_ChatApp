@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="stevan.popov.RegisterActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10px">
+            <EditText
+                android:id="@+id/UsernameTextEditRegisterActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="40px"
+                android:hint="Username*"
+                />
+            <EditText
+                android:id="@+id/FirstNameEditTextRegisterActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="40px"
+                android:hint="First Name"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10px">
+            <EditText
+                android:id="@+id/PasswordTextEditRegisterActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="textPassword"
+                android:layout_marginHorizontal="40px"
+                android:hint="Password*"
+                />
+            <EditText
+                android:id="@+id/LastNameEditTextRegisterActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="40px"
+                android:hint="Last Name"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10px">
+            <EditText
+                android:id="@+id/EmailEditTextRegisterActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:layout_marginLeft="40px"
+                android:hint="Email*"
+                />
+            <Spinner
+                android:id="@+id/SpinnerRegisterActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:layout_marginRight="40px"
+                android:layout_marginLeft="10px"
+                android:drawSelectorOnTop="true"
+                android:entries="@array/spinnerItemsRegisterAcrivity">
+
+            </Spinner>
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/CheckBoxRegisterActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Accept Notification"
+            android:layout_marginTop="20px"
+            android:layout_marginBottom="20px"
+            android:layout_marginLeft="40px"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Birth date"
+            android:layout_marginLeft="40px"/>
+
+        <DatePicker
+            android:id="@+id/DatePickerRegisterActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40px"
+
+            >
+
+        </DatePicker>
+        <Button
+            android:id="@+id/RegisterButtonRegisterActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="REGISTER"
+            android:enabled="false"
+            android:layout_marginBottom="50px"
+            />
+    </LinearLayout>
+</ScrollView>
