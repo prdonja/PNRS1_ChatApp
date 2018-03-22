@@ -4,4 +4,20 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
+    <string name="Login">Login</string>
+    <string name="Register">Register</string>
+    <string name="LogOut">Log Out</string>
+    <string name="PasswordMust">Password*</string>
+    <string name="UsernameMust">Username*</string>
+    <string name="EmailMust">Email*</string>
+    <string name="Email">Email</string>
+    <string name="FirstName">First Name</string>
+    <string name="LastName">Last Name</string>
+    <string name="AccseptNotification">Accept Notification</string>
+    <string name="BirthDate">Birth Date</string>
+    <string name="MyFriend">My Friend</string>
+    <string name="Send">Send</string>
+    <string name="MessageText">Message text</string>
 </resources>

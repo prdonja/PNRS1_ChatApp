@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/UsernameTextEditMainActivity"
-        android:hint="Username"
+        android:hint="@string/Username"
         android:layout_width="400px"
         android:layout_height="wrap_content"
         android:layout_marginTop="100px"
@@ -17,7 +17,7 @@
         />
     <EditText
         android:id="@+id/PasswordTextEditMainActivity"
-        android:hint="Password"
+        android:hint="@string/Password"
         android:layout_width="400px"
         android:layout_height="wrap_content"
         android:layout_marginTop="50px"
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="100px"
-            android:text="LOGIN"
+            android:text="@string/Login"
             android:enabled="false"/>
         <View
             android:layout_width="0dp"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="100px"
             android:layout_gravity="left"
-            android:text="REGISTER"/>
+            android:text="@string/Register"/>
 
     </LinearLayout>
 

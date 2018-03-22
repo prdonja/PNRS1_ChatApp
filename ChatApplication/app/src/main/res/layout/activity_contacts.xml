@@ -14,13 +14,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="Log out"
+            android:text="@string/LogOut"
             android:layout_marginHorizontal="20px"/>
         <TextView
             android:id="@+id/FriendTextViewContactsActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MY FRIEND"
+            android:text="@string/MyFriend"
             android:layout_marginHorizontal="40px"/>
 
     </LinearLayout>
