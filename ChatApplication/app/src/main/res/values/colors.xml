@@ -3,4 +3,5 @@
     <color name="colorPrimary">#1d5914</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#297c1c</color>
+    <color name="colorForMassage">#42f47d</color>
 </resources>

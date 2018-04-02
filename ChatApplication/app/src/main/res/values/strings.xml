@@ -20,4 +20,7 @@
     <string name="MyFriend">My Friend</string>
     <string name="Send">Send</string>
     <string name="MessageText">Message text</string>
+    <string name="MyChatList">My chat list</string>
+    <string name="NameStevanPopov">Stevan Popov</string>
+    <string name="NameMarkoFrancuski">Marko Francuski</string>
 </resources>

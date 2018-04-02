@@ -4,38 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="stevan.popov.MessageActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="stevan.popov.MessageActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/NameTextViewMessageActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20px"
+            android:layout_weight="1"
+            android:text=""
+            android:textSize="50px"
+            android:textStyle="bold" />
+
         <Button
             android:id="@+id/LogOutButtonMessageActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="@string/LogOut"
-            android:layout_marginHorizontal="20px"/>
+            android:layout_marginHorizontal="20px"
+            android:text="@string/LogOut" />
+
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/ListViewMessageActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="150px"
+        android:transcriptMode="alwaysScroll">
+
+    </ListView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom = "true">
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
         <EditText
             android:id="@+id/MessageEditTextMessageActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/MessageText"/>
+            android:hint="@string/MessageText" />
+
         <Button
             android:id="@+id/SendButtonMessageActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Send"
-            android:enabled="false"/>
-    </LinearLayout>
+            android:enabled="false"
+            android:text="@string/Send" />
 
+    </LinearLayout>
 
 
 </RelativeLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/FirstCharacterOfNameTextViewRowItame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20px"
+        android:width="150px"
+        android:height="150px"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="S" />
+
+    <TextView
+        android:id="@+id/NameTextViewRowItame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20px"
+        android:layout_weight="1"
+        android:text="Ime Prezime"
+        android:textSize="50px"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/SendPictureImageViewRowItame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="20px"
+        android:background="@drawable/ic_send_button"
+        android:clickable="true"
+        android:minHeight="60px"
+        android:minWidth="60px" />
+
+
+</LinearLayout>

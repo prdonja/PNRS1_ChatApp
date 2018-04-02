@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class ContactsActivity extends AppCompatActivity {
@@ -14,21 +16,43 @@ public class ContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
         final Button logOutButton = (Button) findViewById(R.id.LogOutButtonContactsActivity);
-        final TextView friendTextView = (TextView) findViewById(R.id.FriendTextViewContactsActivity);
+        AdapterContactsList adapter = new AdapterContactsList(this);
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameStevanPopov)));
+        adapter.AddCharacter(new ModelForContactsList(getResources().getDrawable(R.drawable.ic_send_button), getResources().getString(R.string.NameMarkoFrancuski)));
+
+        ListView list = (ListView) findViewById(R.id.ListViewContactsActivity);
+        list.setAdapter(adapter);
         //Go to RegisterActivity
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                view.getContext().startActivity(intent);
+                Intent intent = new Intent(ContactsActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
-        friendTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), MessageActivity.class);
-                view.getContext().startActivity(intent);
-            }
-        });
+
+
     }
 }
