@@ -23,4 +23,8 @@
     <string name="MyChatList">My chat list</string>
     <string name="NameStevanPopov">Stevan Popov</string>
     <string name="NameMarkoFrancuski">Marko Francuski</string>
+    <string name="UsernameAlreadyExists">Username already exists!</string>
+    <string name="UsernameDoesntExists">Username does not exists!</string>
+    <string name="MySharedPref">MySharedPref</string>
+
 </resources>

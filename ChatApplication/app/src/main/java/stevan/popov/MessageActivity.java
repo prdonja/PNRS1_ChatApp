@@ -2,6 +2,7 @@ package stevan.popov;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,6 +18,9 @@ import android.widget.Toast;
 public class MessageActivity extends AppCompatActivity {
 
     AdapterMessageList adapter;
+    private int ActiveUserId;
+    private int MessageReciverId;
+    private ChatApplicationDbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,24 +31,17 @@ public class MessageActivity extends AppCompatActivity {
         final EditText messageEditText = (EditText) findViewById(R.id.MessageEditTextMessageActivity);
         final TextView textView = (TextView) findViewById(R.id.NameTextViewMessageActivity);
 
+        mDbHelper = new ChatApplicationDbHelper(this);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         String name = bundle.getString("NameFromContactsList");
         textView.setText(name);
+        SharedPreferences prefs = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        ActiveUserId = prefs.getInt("ActiveUser", 0);
+        MessageReciverId = prefs.getInt("receiverId", 0);
+
 
         adapter = new AdapterMessageList(this);
-        adapter.AddCharacter(new ModelForMessageList("poruka", false));
-        adapter.AddCharacter(new ModelForMessageList("poruka", true));
-        adapter.AddCharacter(new ModelForMessageList("poruka", false));
-        adapter.AddCharacter(new ModelForMessageList("poruka", true));
-        adapter.AddCharacter(new ModelForMessageList("poruka", false));
-        adapter.AddCharacter(new ModelForMessageList("poruka", true));
-        adapter.AddCharacter(new ModelForMessageList("poruka", false));
-        adapter.AddCharacter(new ModelForMessageList("poruka", true));
-        adapter.AddCharacter(new ModelForMessageList("poruka", false));
-        adapter.AddCharacter(new ModelForMessageList("poruka", true));
-        adapter.AddCharacter(new ModelForMessageList("poruka", false));
-        adapter.AddCharacter(new ModelForMessageList("poruka", true));
 
         ListView list = (ListView) findViewById(R.id.ListViewMessageActivity);
         list.setDivider(null);
@@ -53,9 +50,12 @@ public class MessageActivity extends AppCompatActivity {
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-                ModelForMessageList item = (ModelForMessageList) adapter.getItem(position);
-                adapter.RemoveMessage(item);
-                adapter.notifyDataSetChanged();
+                mDbHelper.deleteMessage(position);
+                String tempActiveUserId = String.valueOf(ActiveUserId);
+                String tempSender = String.valueOf(MessageReciverId);
+                ModelForMessageList[] messages = mDbHelper.readMessages(tempActiveUserId, tempSender);
+
+                adapter.update(messages);
                 return true;
             }
         });
@@ -91,7 +91,16 @@ public class MessageActivity extends AppCompatActivity {
                 Context context = getApplicationContext();
                 CharSequence text = "Message is sent!";
                 int duration = Toast.LENGTH_SHORT;
-                adapter.AddCharacter(new ModelForMessageList(messageEditText.getText().toString(), true));
+                //adapter.AddCharacter(new ModelForMessageList(messageEditText.getText().toString(), true));
+                String messageText = messageEditText.getText().toString();
+
+                ModelForMessageList m_message = new ModelForMessageList(0, MessageReciverId, ActiveUserId, messageText);
+                mDbHelper.insertMessage(m_message);
+                String tempActiveUserId = String.valueOf(ActiveUserId);
+                String tempSender = String.valueOf(MessageReciverId);
+                ModelForMessageList[] messages = mDbHelper.readMessages(tempActiveUserId, tempSender);
+
+                adapter.update(messages);
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
@@ -106,5 +115,15 @@ public class MessageActivity extends AppCompatActivity {
                 view.getContext().startActivity(intent);
             }
         });
+
+    }
+
+    protected void onResume() {
+        super.onResume();
+        String tempActiveUserId = String.valueOf(ActiveUserId);
+        String tempSender = String.valueOf(MessageReciverId);
+        ModelForMessageList[] messages = mDbHelper.readMessages(tempActiveUserId, tempSender);
+
+        adapter.update(messages);
     }
 }

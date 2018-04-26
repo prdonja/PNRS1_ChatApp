@@ -2,6 +2,7 @@ package stevan.popov;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,9 +36,25 @@ public class AdapterContactsList extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void removeContact(int position) {
+        mCharacters.remove(position);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return mCharacters.size();
+    }
+
+    public void update(ModelForContactsList[] contacts) {
+        mCharacters.clear();
+        if (contacts != null) {
+            for (ModelForContactsList contact : contacts) {
+                mCharacters.add(contact);
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
     @Override
@@ -72,6 +89,11 @@ public class AdapterContactsList extends BaseAdapter {
             holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    SharedPreferences.Editor editor = mContext.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE).edit();
+                    editor.putInt("receiverId", Integer.parseInt(view.getTag().toString()));
+                    editor.apply();
+
                     Bundle bundle = new Bundle();
                     TextView text = bundleConvertView.findViewById(R.id.NameTextViewRowItame);
                     bundle.putString("NameFromContactsList", text.getText().toString());
@@ -85,13 +107,18 @@ public class AdapterContactsList extends BaseAdapter {
 
         ModelForContactsList model = (ModelForContactsList) getItem(position);
         ViewHolder holder = (ViewHolder) convertView.getTag();
-        holder.image.setImageDrawable(model.mImage);
-        holder.name.setText(model.mName);
-        holder.firstChar.setText(model.mFirstCharacterOfName);
+        holder.image.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_send_button));
+        holder.image.setTag(position);
+        String Name = model.getmFirstName() + " " + model.getmLastName();
+        holder.name.setText(Name);
+        String FirstCh = model.getmFirstName().substring(0, 1).toUpperCase();
+        holder.firstChar.setText(FirstCh);
 
         Random rnd = new Random();
         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
         holder.firstChar.setBackgroundColor(color);
+
+        holder.image.setTag(model.getmContactId());
 
         return convertView;
     }
@@ -100,5 +127,6 @@ public class AdapterContactsList extends BaseAdapter {
         public ImageView image = null;
         public TextView name = null;
         public TextView firstChar = null;
+
     }
 }

@@ -1,6 +1,7 @@
 package stevan.popov;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,9 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ChatApplicationDbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         final Button registerButton = (Button) findViewById(R.id.RegisterButtonMainActivity);
         final boolean[] passwordEntered = {false};
         final boolean[] usernameEntered = {false};
-
+        mDbHelper = new ChatApplicationDbHelper(this);
         //Check if password is entered
         usernameTextEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -39,15 +42,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String text = usernameTextEdit.getText().toString();
-                if(text.length() != 0)
-                {
+                if (text.length() != 0) {
                     usernameEntered[0] = true;
                     if (passwordEntered[0] == true) {
                         loginButton.setEnabled(true);
                     }
-                }
-                else
-                {
+                } else {
                     usernameEntered[0] = false;
                     loginButton.setEnabled(false);
                 }
@@ -67,15 +67,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String text = passwordTextEdit.getText().toString();
-                if(text.length() >= 6)
-                {
+                if (text.length() >= 6) {
                     passwordEntered[0] = true;
                     if (usernameEntered[0] == true) {
                         loginButton.setEnabled(true);
                     }
-                }
-                else
-                {
+                } else {
                     passwordEntered[0] = false;
                     loginButton.setEnabled(false);
                 }
@@ -94,8 +91,28 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ContactsActivity.class);
-                view.getContext().startActivity(intent);
+                ModelForContactsList[] contacts = mDbHelper.readContacts();
+                int contact_exists = 1;
+                SharedPreferences.Editor editor = getSharedPreferences("MySharedPref", MODE_PRIVATE).edit();
+                if (contacts != null) {
+                    for (int i = 0; i < contacts.length; i++) {
+                        contact_exists = contacts[i].getmUsername().compareTo(usernameTextEdit.getText().toString());
+                        if (contact_exists == 0) {
+                            editor.putInt("ActiveUser", contacts[i].getmContactId());
+                            editor.apply();
+                            break;
+                        }
+                    }
+                }
+                if (contact_exists == 0) {
+
+                    Intent intent = new Intent(view.getContext(), ContactsActivity.class);
+                    view.getContext().startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.UsernameDoesntExists, Toast.LENGTH_LONG).show();
+                }
+                /*Intent intent = new Intent(view.getContext(), ContactsActivity.class);
+                view.getContext().startActivity(intent);*/
             }
         });
 

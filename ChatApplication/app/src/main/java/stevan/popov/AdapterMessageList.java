@@ -2,6 +2,7 @@ package stevan.popov;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class AdapterMessageList extends BaseAdapter {
     private Context mContext;
     private ArrayList<ModelForMessageList> mCharacters;
@@ -25,6 +28,17 @@ public class AdapterMessageList extends BaseAdapter {
 
     public void AddCharacter(ModelForMessageList model) {
         mCharacters.add(model);
+        notifyDataSetChanged();
+    }
+
+    public void update(ModelForMessageList[] messages) {
+        mCharacters.clear();
+        if (messages != null) {
+            for (ModelForMessageList message : messages) {
+                mCharacters.add(message);
+            }
+        }
+
         notifyDataSetChanged();
     }
 
@@ -70,8 +84,12 @@ public class AdapterMessageList extends BaseAdapter {
         ModelForMessageList model = (ModelForMessageList) getItem(position);
         ViewHolder holder = (ViewHolder) convertView.getTag();
 
-        holder.messageText.setText(model.mMessage);
-        if (model.mColor == true) {
+        holder.messageText.setText(model.getmMessage());
+
+        SharedPreferences prefs = mContext.getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        int ActiveUserId = prefs.getInt("ActiveUser", 0);
+
+        if (model.getmSender_id() != ActiveUserId) {
             holder.messageText.setBackgroundColor(Color.parseColor("#cbd3ce"));
             holder.messageText.setGravity(Gravity.CENTER_VERTICAL | Gravity.END);
 
@@ -92,7 +110,6 @@ public class AdapterMessageList extends BaseAdapter {
 
     private class ViewHolder {
         public TextView messageText = null;
-        public Boolean color = false;
     }
 
 }

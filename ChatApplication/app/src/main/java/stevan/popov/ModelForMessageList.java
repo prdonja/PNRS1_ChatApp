@@ -2,28 +2,47 @@ package stevan.popov;
 
 
 public class ModelForMessageList {
-    public String mMessage;
-    public Boolean mColor;
+    private int mMessage_id;
+    private int mSender_id;
+    private int mReceiver_id;
+    private String mMessage;
 
-    public ModelForMessageList(String mMessage, Boolean mColor) {
+    public ModelForMessageList(int mMessage_id, int mSender_id, int mReceiver_id, String mMessage) {
+        this.mMessage_id = mMessage_id;
+        this.mSender_id = mSender_id;
+        this.mReceiver_id = mReceiver_id;
         this.mMessage = mMessage;
-        this.mColor = mColor;
+    }
+
+    public int getmMessage_id() {
+        return mMessage_id;
+    }
+
+    public void setmMessage_id(int mMessage_id) {
+        this.mMessage_id = mMessage_id;
+    }
+
+    public int getmSender_id() {
+        return mSender_id;
+    }
+
+    public void setmSender_id(int mSender_id) {
+        this.mSender_id = mSender_id;
+    }
+
+    public int getmReceiver_id() {
+        return mReceiver_id;
+    }
+
+    public void setmReceiver_id(int mReceiver_id) {
+        this.mReceiver_id = mReceiver_id;
     }
 
     public String getmMessage() {
-
         return mMessage;
     }
 
     public void setmMessage(String mMessage) {
         this.mMessage = mMessage;
-    }
-
-    public Boolean getmColor() {
-        return mColor;
-    }
-
-    public void setmColor(Boolean mColor) {
-        this.mColor = mColor;
     }
 }
