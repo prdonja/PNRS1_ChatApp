@@ -3,14 +3,19 @@ package stevan.popov;
 
 public class ModelForMessageList {
     private int mMessage_id;
-    private int mSender_id;
+    private String mSender_id;
     private int mReceiver_id;
     private String mMessage;
 
-    public ModelForMessageList(int mMessage_id, int mSender_id, int mReceiver_id, String mMessage) {
+    public ModelForMessageList(int mMessage_id, String mSender_id, int mReceiver_id, String mMessage) {
         this.mMessage_id = mMessage_id;
         this.mSender_id = mSender_id;
         this.mReceiver_id = mReceiver_id;
+        this.mMessage = mMessage;
+    }
+
+    public ModelForMessageList(String mSender_id, String mMessage) {
+        this.mSender_id = mSender_id;
         this.mMessage = mMessage;
     }
 
@@ -22,11 +27,11 @@ public class ModelForMessageList {
         this.mMessage_id = mMessage_id;
     }
 
-    public int getmSender_id() {
+    public String getmSender_id() {
         return mSender_id;
     }
 
-    public void setmSender_id(int mSender_id) {
+    public void setmSender_id(String mSender_id) {
         this.mSender_id = mSender_id;
     }
 

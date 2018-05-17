@@ -1,7 +1,9 @@
 package stevan.popov;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,9 +14,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private ChatApplicationDbHelper mDbHelper;
+    private Context context;
+    private ChatApplicationHttpHelper http;
+    private Handler handler;
+
+    private static String BASE_URL = "http://18.205.194.168:80";
+    private static String LOGIN_URL = BASE_URL + "/login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
         final Button registerButton = (Button) findViewById(R.id.RegisterButtonMainActivity);
         final boolean[] passwordEntered = {false};
         final boolean[] usernameEntered = {false};
-        mDbHelper = new ChatApplicationDbHelper(this);
+        //mDbHelper = new ChatApplicationDbHelper(this);
+        context = this;
+        http = new ChatApplicationHttpHelper();
+        handler = new Handler();
+
         //Check if password is entered
         usernameTextEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -91,7 +108,44 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ModelForContactsList[] contacts = mDbHelper.readContacts();
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("username", usernameTextEdit.getText().toString());
+                            jsonObject.put("password", passwordTextEdit.getText().toString());
+
+                            final boolean response = http.postLogedOnServer(MainActivity.this, LOGIN_URL, jsonObject);
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(response){
+                                        Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
+
+                                        SharedPreferences.Editor editor = getSharedPreferences("MySharedPref", MODE_PRIVATE).edit();
+                                        editor.putString("ActiveUser", usernameTextEdit.getText().toString());
+                                        editor.apply();
+                                        startActivity(intent);
+                                    }
+                                    else {
+                                        SharedPreferences mPreferences = context.getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                                        String error = mPreferences.getString("error", null);
+                                        Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+
+                /*ModelForContactsList[] contacts = mDbHelper.readContacts();
                 int contact_exists = 1;
                 SharedPreferences.Editor editor = getSharedPreferences("MySharedPref", MODE_PRIVATE).edit();
                 if (contacts != null) {

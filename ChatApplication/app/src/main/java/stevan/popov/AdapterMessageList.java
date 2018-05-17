@@ -87,9 +87,11 @@ public class AdapterMessageList extends BaseAdapter {
         holder.messageText.setText(model.getmMessage());
 
         SharedPreferences prefs = mContext.getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        int ActiveUserId = prefs.getInt("ActiveUser", 0);
+        String ActiveUserId = prefs.getString("ActiveUser", null);
+        String SenderId = prefs.getString("receiverId", null);
 
-        if (model.getmSender_id() != ActiveUserId) {
+
+        if (!SenderId.equals(model.getmSender_id())) {
             holder.messageText.setBackgroundColor(Color.parseColor("#cbd3ce"));
             holder.messageText.setGravity(Gravity.CENTER_VERTICAL | Gravity.END);
 

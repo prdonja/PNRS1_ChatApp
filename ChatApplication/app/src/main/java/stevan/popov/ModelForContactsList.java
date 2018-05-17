@@ -11,8 +11,8 @@ public class ModelForContactsList {
     private String mFirstName;
     private String mLastName;
 
-    public ModelForContactsList(String mName) {
-        this.mName = mName;
+    public ModelForContactsList(String mUsername) {
+        this.mUsername = mUsername;
     }
 
     public ModelForContactsList(int mContactId, String mUsername, String mFirstName, String mLastName) {

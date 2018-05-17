@@ -156,7 +156,7 @@ public class ChatApplicationDbHelper extends SQLiteOpenHelper {
     private ModelForMessageList createMessage(Cursor cursor) {
 
         int mMessageId = cursor.getInt(cursor.getColumnIndex(MESSAGE_COLUMN_MESSAGE_ID));
-        int mSenderId = cursor.getInt(cursor.getColumnIndex(MESSAGE_COLUMN_SENDER_ID));
+        String mSenderId = cursor.getString(cursor.getColumnIndex(MESSAGE_COLUMN_SENDER_ID));
         int mReceiver = cursor.getInt(cursor.getColumnIndex(MESSAGE_COLUMN_RECEIVER_ID));
         String mMessage = cursor.getString(cursor.getColumnIndex(MESSAGE_COLUMN_MESSAGE));
 

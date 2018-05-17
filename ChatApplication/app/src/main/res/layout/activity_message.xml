@@ -25,6 +25,13 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/RefreshButtonMessageActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="20px"
+            android:text="@string/Refresh" />
+        <Button
             android:id="@+id/LogOutButtonMessageActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

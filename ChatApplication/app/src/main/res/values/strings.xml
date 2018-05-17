@@ -26,5 +26,7 @@
     <string name="UsernameAlreadyExists">Username already exists!</string>
     <string name="UsernameDoesntExists">Username does not exists!</string>
     <string name="MySharedPref">MySharedPref</string>
+    <string name="Refresh">Refresh</string>
+    <string name="MessageSent">Message is sent!</string>
 
 </resources>

@@ -91,7 +91,7 @@ public class AdapterContactsList extends BaseAdapter {
                 public void onClick(View view) {
 
                     SharedPreferences.Editor editor = mContext.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE).edit();
-                    editor.putInt("receiverId", Integer.parseInt(view.getTag().toString()));
+                    editor.putString("receiverId", view.getTag().toString());
                     editor.apply();
 
                     Bundle bundle = new Bundle();
@@ -109,16 +109,16 @@ public class AdapterContactsList extends BaseAdapter {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         holder.image.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_send_button));
         holder.image.setTag(position);
-        String Name = model.getmFirstName() + " " + model.getmLastName();
+        String Name = model.getmUsername();
         holder.name.setText(Name);
-        String FirstCh = model.getmFirstName().substring(0, 1).toUpperCase();
+        String FirstCh = model.getmUsername().substring(0, 1).toUpperCase();
         holder.firstChar.setText(FirstCh);
 
         Random rnd = new Random();
         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
         holder.firstChar.setBackgroundColor(color);
 
-        holder.image.setTag(model.getmContactId());
+        holder.image.setTag(model.getmUsername());
 
         return convertView;
     }
