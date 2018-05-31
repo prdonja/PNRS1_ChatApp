@@ -1,9 +1,16 @@
 package stevan.popov;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +26,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class ContactsActivity extends AppCompatActivity {
+public class ContactsActivity extends AppCompatActivity implements ServiceConnection {
     private ChatApplicationDbHelper mDbHelper;
     private AdapterContactsList adapter;
     private int ActiveUserId;
@@ -31,6 +38,7 @@ public class ContactsActivity extends AppCompatActivity {
     private static String BASE_URL = "http://18.205.194.168:80";
     private static String CONTACTS_URL = BASE_URL + "/contacts";
     private static String LOGOUT_URL = BASE_URL + "/logout";
+    private INotificationBinder mService = null;
 
     private ModelForContactsList[] allContacts;
 
@@ -53,6 +61,7 @@ public class ContactsActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         //ActiveUserId = prefs.getInt("ActiveUser", 0);
+
 
         //Go to RegisterActivity
         logOutButton.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +100,18 @@ public class ContactsActivity extends AppCompatActivity {
         });
 
 
+        bindService(new Intent(ContactsActivity.this, NotificationService.class), this, Context.BIND_AUTO_CREATE);
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mService != null) {
+            unbindService(this);
+        }
     }
 
     protected void onResume() {
@@ -135,5 +156,61 @@ public class ContactsActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                mService = INotificationBinder.Stub.asInterface(iBinder);
+                try {
+                        mService.setCallback(new NotificationCallback());
+                    } catch (RemoteException e) {
+                    }
+            }
+
+            @Override
+    public void onServiceDisconnected(ComponentName componentName) {
+                mService = null;
+            }
+
+    private class NotificationCallback extends INotificationCallback.Stub {
+
+        @Override
+        public void onCallbackCall() throws RemoteException {
+
+            final ChatApplicationHttpHelper httpHelper = new ChatApplicationHttpHelper();
+            final Handler handler = new Handler();
+
+            final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), null)
+                    .setSmallIcon(R.drawable.ic_send_button)
+                    .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                            R.mipmap.ic_launcher))
+                    .setContentTitle(getText(R.string.app_name))
+                    .setContentText(getText(R.string.YouHaveNewMessage))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+
+
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        final boolean response = httpHelper.getNotification(ContactsActivity.this);
+
+                        handler.post(new Runnable() {
+                            public void run() {
+                                if (response) {
+                                    // notificationId is a unique int for each notification that you must define
+                                    notificationManager.notify(2, mBuilder.build());
+                                }
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
     }
 }

@@ -28,5 +28,6 @@
     <string name="MySharedPref">MySharedPref</string>
     <string name="Refresh">Refresh</string>
     <string name="MessageSent">Message is sent!</string>
+    <string name="YouHaveNewMessage">You have new message</string>
 
 </resources>
