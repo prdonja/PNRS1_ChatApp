@@ -35,6 +35,8 @@ public class MessageActivity extends AppCompatActivity {
     private Handler handler;
     private Context context;
 
+    Crypto mCrypto;
+
     private static String BASE_URL = "http://18.205.194.168:80";
     private static String POST_MESSAGE_URL = BASE_URL + "/message";
     private static String GET_MESSAGE_URL = BASE_URL + "/message/";
@@ -65,6 +67,8 @@ public class MessageActivity extends AppCompatActivity {
         MessageReciverIdStr = prefs.getString("receiverId", null);
         http = new ChatApplicationHttpHelper();
         handler = new Handler();
+
+        mCrypto = new Crypto();
 
 
         adapter = new AdapterMessageList(this);
@@ -124,7 +128,9 @@ public class MessageActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject();
                         try {
                             jsonObject.put("receiver", MessageReciverIdStr);
-                            jsonObject.put("data", messageEditText.getText().toString());
+                            String mMessage = messageEditText.getText().toString();
+                            String cryptedMessage = mCrypto.crypt(mMessage);
+                            jsonObject.put("data", cryptedMessage);
 
                             final boolean success = http.postMessageToServer(MessageActivity.this, POST_MESSAGE_URL, jsonObject);
 
@@ -227,7 +233,10 @@ public class MessageActivity extends AppCompatActivity {
                                 for (int i = 0; i < messages.length(); i++) {
                                     try {
                                         json_message = messages.getJSONObject(i);
-                                        all_messages[i] = new ModelForMessageList(json_message.getString("sender"),json_message.getString("data"));
+                                        //all_messages[i] = new ModelForMessageList(json_message.getString("sender"),json_message.getString("data"));
+                                        String mMessage = json_message.getString("data");
+                                        String decMessage = mCrypto.crypt(mMessage);
+                                        all_messages[i] = new ModelForMessageList(json_message.getString("sender"),decMessage);
                                     } catch (JSONException e1) {
                                         e1.printStackTrace();
                                     }
